@@ -155,12 +155,13 @@ import virtuoso.sql.RdfBox;
  * 
  */
 public class VirtuosoRepositoryConnection implements RepositoryConnection {
+
 	private static Resource nilContext;
 	private Connection quadStoreConnection;
 	protected VirtuosoRepository repository;
 	static final String S_INSERT = "sparql insert into graph iri(??) { `iri(??)` `iri(??)` `bif:__rdf_long_from_batch_params(??,??,??)` }";
         static final String S_DELETE = "sparql delete from graph iri(??) {`iri(??)` `iri(??)` `bif:__rdf_long_from_batch_params(??,??,??)`}";
-        static final String S_TTLP_INSERT = "DB.DBA.TTLP(?,'',?,255)";
+        static final String S_TTLP_INSERT = "DB.DBA.TTLP_MT(?,'',?,255,2)";
         static final int MAX_CMD_SIZE = 36000;
 
 	private int BATCH_SIZE = 5000;
@@ -171,7 +172,6 @@ public class VirtuosoRepositoryConnection implements RepositoryConnection {
 	private int prefetchSize = 200;
 
 	private volatile ParserConfig parserConfig = new ParserConfig(true, true, false, DatatypeHandling.IGNORE);
-
 
 	public VirtuosoRepositoryConnection(VirtuosoRepository repository, Connection connection) throws RepositoryException {
 		this.quadStoreConnection = connection;
@@ -2418,7 +2418,7 @@ public class VirtuosoRepositoryConnection implements RepositoryConnection {
 		query.append(o);
 		query.append(" }}");
 		if (hasOnly)
-			query.append(" LIMIT 1");
+			query.append(" LIMIT 2");
 
 		try {
 			java.sql.Statement stmt = createStatement();
