@@ -79,7 +79,7 @@ virt_sesame2.jar: $(SESAME_SRC) manifest.main
 	-mkdir out.driver/org/openrdf
 	-mkdir out.driver/org/openrdf/console
 	-cp virtuoso.ttl out.driver/org/openrdf/console
-	$(JAVAC) $(JDK_FLAGS) -d out.driver \
+	$(JAVAC) $(JDK_FLAGS) -target 1.6 -source 1.6 -d out.driver \
 		-classpath "$(SESAME_CLASSPATH)" \
 		$(SESAME_SRC)
 	$(JAR) cvfm virt_sesame2.jar manifest.main -C out.driver .
